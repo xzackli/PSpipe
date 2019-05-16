@@ -22,20 +22,15 @@ class PlanckSpectra():
 
 
         # set up binning
-        binleft, binright = np.genfromtxt(binfile,
-                                          unpack=True, usecols=(0,1), dtype=((int), (int)))
-        # have to prepend the bins down to ell=2
-        bonus_left, bonus_right = self.get_low_ell_bins(5, l_min=2)
-        binleft, binright = np.hstack((bonus_left,binleft)), np.hstack((bonus_right,binright))
-
+        binleft, binright = np.arange(2,lmax+1), np.arange(2,lmax+1)
         # set up NaMaster bins (bins weighted as D_ell as specified by Planck)
         ells = np.arange(lmax+1)
         bpws = -1+np.zeros_like(ells) #Array of bandpower indices
         for i, (bl, br) in enumerate(zip(binleft, binright)):
             bpws[bl:br+1] = i
         self.weights = np.array([ 1 for l in ells])
-        self.b = nmt.NmtBin(nside, bpws=bpws, ells=ells, weights=self.weights, lmax=lmax, is_Dell=True)
-        self.lb = self.b.get_effective_ells()
+        self.b = nmt.NmtBin(nside, bpws=bpws, ells=ells, weights=self.weights, lmax=lmax)
+        self.ll = self.b.get_effective_ells()
 
         # compute and store the pixel window
         self.pixel_window = hp.sphtfunc.pixwin(nside, pol=False)[:self.lmax_beam]
@@ -98,9 +93,9 @@ class PlanckSpectra():
 
     def load_beam(self, freq1, freq2):
         if float(freq1) > float(freq2):
-            beam_filename = f'planck_beam/beam_likelihood_{freq2}hm1x{freq1}hm2.dat'
+            beam_filename = f'planck_beam/beam_probably_used_in_2015_likelihood_{freq2}hm1x{freq1}hm2.dat.dat'
         else:
-            beam_filename = f'planck_beam/beam_likelihood_{freq1}hm1x{freq2}hm2.dat'
+            beam_filename = f'planck_beam/beam_probably_used_in_2015_likelihood_{freq1}hm1x{freq2}hm2.dat.dat'
         beam_ell, beam = np.genfromtxt(beam_filename, unpack=True) # beam file is ell, Bl
         Bl = np.zeros(self.lmax_beam)
         Bl[beam_ell.astype(int)] = beam
@@ -172,16 +167,22 @@ class PlanckSpectra():
         Cb['EB'] = spin2[1]
         Cb['BE'] = spin2[2]
         Cb['BB'] = spin2[3]
-
-        # T1/P2 (already done), T2/P1
-#         spin1 = self.compute_master(f2t,f1p,w1)
-#         Cb['TE'] += spin1[0]
-#         Cb['TB'] += spin1[1]
-#         Cb['TE'] /= 2.0
-#         Cb['TB'] /= 2.0
-
-        Cb['ET']=Cb['TE']
-        Cb['BT']=Cb['TB']
+        Cb['ET'] = Cb['TE']
+        Cb['BT'] = Cb['TB']
+        
+        # now bin everything
+        binleft, binright = np.genfromtxt('planck_spectra/binused.dat', 
+                                  unpack=True, usecols=(0,1), dtype=((int), (int)))
+        ell_sub_list = [ np.arange(l,r) for (l,r) in zip(binleft, binright+1) ]
+        self.lb = np.array([np.sum(ell_sub) / len(ell_sub) for ell_sub in ell_sub_list])
+        
+        for spec_key in Cb:
+            cl_from_zero = np.zeros(self.lmax+1)
+            cl_from_zero[self.ll.astype('int')] = Cb[spec_key] * 1e12
+            # ell * (ell+1) weighted 
+            weights = np.arange(self.lmax+1) * (np.arange(self.lmax+1) + 1)
+            Cb[spec_key] = np.array([np.sum((weights * cl_from_zero)[ell_sub]
+              ) / np.sum(weights[ell_sub]) for ell_sub in ell_sub_list])
 
         return Cb
 
