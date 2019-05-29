@@ -36,7 +36,7 @@ class PlanckSpectra():
         self.pixel_window = hp.sphtfunc.pixwin(nside, pol=False)[:self.lmax_beam]
 
 
-    def subtract_mono_di(self, map_in, mask_in):
+    def subtract_mono_di(self, map_in, mask_in, mono_fac=1.0):
         map_masked = hp.ma(map_in)
         map_masked.mask = (mask_in<1)
         mono, dipole = hp.pixelfunc.fit_dipole(map_masked)
@@ -51,7 +51,7 @@ class PlanckSpectra():
             m.flat[ipix] -= dipole[0] * x
             m.flat[ipix] -= dipole[1] * y
             m.flat[ipix] -= dipole[2] * z
-            m.flat[ipix] -= mono
+            m.flat[ipix] -= mono * mono_fac  # MODIFY FACTOR
         return m
 
     def load_mask(self, freq):
@@ -73,14 +73,9 @@ class PlanckSpectra():
 
     def load_bad_pix(self, freq, split):
         mfile = f'{self.map_dir}/HFI_SkyMap_{freq}_2048_R2.02_halfmission-{split}.fits'
-        II_COV = hp.read_map(mfile, field=4, verbose=False)
-        QQ_COV = hp.read_map(mfile, field=5, verbose=False)
-        UU_COV = hp.read_map(mfile, field=6, verbose=False)
-        
-        badT = II_COV < -1e30
-        badP = np.logical_or.reduce( 
-            (II_COV < -1e30, QQ_COV < -1e30, UU_COV < -1e30) )
-        return (badT, badP, badP)
+        hits = hp.read_map(mfile, field=3, verbose=False)
+        bad = (hits == 0)
+        return (bad, bad, bad)
 
 #         m0_file = f'maps/PR3/frequencyMaps/HFI_SkyMap_{freq}_2048_R3.01_halfmission-{split}.fits'
 #         map0 = [hp.read_map(m0_file, field=0, verbose=False), # I
@@ -127,12 +122,20 @@ class PlanckSpectra():
 
         # subtract monopole and dipole
         if subtract_mono_and_dipole:
-#             map1[0] = self.subtract_mono_di(map1[0], mask1[0])
-#             map2[0] = self.subtract_mono_di(map2[0], mask2[0])
-            map1 = [self.subtract_mono_di(m, mask)
-                for m, mask in zip(map1, mask1)]
-            map2 = [self.subtract_mono_di(m, mask)
-                for m, mask in zip(map2, mask2)]
+            map1[0] = self.subtract_mono_di(map1[0], mask1[0], mono_fac=1.1)
+            map2[0] = self.subtract_mono_di(map2[0], mask2[0], mono_fac=1.1)
+            
+            map1[1] = self.subtract_mono_di(map1[1], mask1[1])
+            map2[1] = self.subtract_mono_di(map2[1], mask2[1])
+            map1[2] = self.subtract_mono_di(map1[2], mask1[2])
+            map2[2] = self.subtract_mono_di(map2[2], mask2[2])
+
+
+
+#             map1 = [self.subtract_mono_di(m, mask)
+#                 for m, mask in zip(map1, mask1)]
+#             map2 = [self.subtract_mono_di(m, mask)
+#                 for m, mask in zip(map2, mask2)]
 
         # obtain beam
         Bl = self.load_beam(freq1, freq2)
@@ -169,6 +172,15 @@ class PlanckSpectra():
         Cb['BB'] = spin2[3]
         Cb['ET'] = Cb['TE']
         Cb['BT'] = Cb['TB']
+        
+        # leave the other split optional
+        self.Cb2 = {}
+        spin1 = self.compute_master(f2t, f1p, w1)
+        self.Cb2['TE']=spin1[0]
+        self.Cb2['TB']=spin1[1]
+        self.Cb2['ET']=self.Cb2['TE']
+        self.Cb2['BT']=self.Cb2['TB']
+
         
         # now bin everything
         binleft, binright = np.genfromtxt('planck_spectra/binused.dat', 
