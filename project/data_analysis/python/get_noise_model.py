@@ -48,7 +48,7 @@ for sv in surveys:
                 plt.figure(figsize=(12,12))
 
                 if (spec == "TT" or spec == "EE" or spec == "BB") & (ar1 == ar2):
-                
+                    nbs_mean[np.isnan(nbs_mean)] = np.roll(nbs_mean, -1)[np.isnan(nbs_mean)] # Hack to remove nan, set equal to next value
                     nl = scipy.interpolate.interp1d(lb, nbs_mean, fill_value = "extrapolate")
                     nl_dict[spec] = np.array([nl(i) for i in lth])
                     id = np.where(lth <= np.min(lb))
