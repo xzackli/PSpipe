@@ -1,0 +1,186 @@
+freqs = ["100", "143", "217"]
+
+# Preprocessing parameters
+planck_kfilt = False
+remove_planck_pixwin_preprocess = True
+act_kfilt = True
+remove_act_pixwin_preprocess = True
+vk_mask = [-90, 90]
+hk_mask = [-50, 50]
+# Set to True to do ACT k-space filtering in get_spectra.py instead of in preprocessing
+use_kspace_filter = False
+
+regions = ["deep56"]
+surveys = ["s14_deep56", "s15_deep56"]
+arrays_s14_deep56 = ["pa1_f150", "pa2_f150"]
+arrays_s15_deep56 = ["pa1_f150", "pa2_f150", "pa3_f090", "pa3_f150"]
+
+planck_data_dir = '/global/homes/r/rosenber/planck/'
+planck_scratch = '/global/cscratch1/sd/rosenber/planck_data/'
+
+# planck_hp_100 = planck_data_dir + "maps/HFI_SkyMap_100_2048_R3.01_full.fits"
+# planck_hp_143 = planck_data_dir + "maps/HFI_SkyMap_143_2048_R3.01_full.fits"
+# planck_hp_217 = planck_data_dir + "maps/HFI_SkyMap_217_2048_R3.01_full.fits"
+planck_hp_100 = planck_data_dir + "maps/HFI_SkyMap_100_2048_R3.01_halfmission-1.fits"
+planck_hp_143 = planck_data_dir + "maps/HFI_SkyMap_143_2048_R3.01_halfmission-1.fits"
+planck_hp_217 = planck_data_dir + "maps/HFI_SkyMap_217_2048_R3.01_halfmission-1.fits"
+
+planck_car_100_deep56 = planck_scratch+'car_maps/planck_100_hm2_deep56_unpixwin.fits'
+planck_car_143_deep56 = planck_scratch+'car_maps/planck_143_hm2_deep56_unpixwin.fits'
+planck_car_217_deep56 = planck_scratch+'car_maps/planck_217_hm2_deep56_unpixwin.fits'
+
+# planck_car_100_deep56 = planck_scratch+'car_maps/planck_100_full_deep56_filt_unpixwin.fits'
+# planck_car_143_deep56 = planck_scratch+'car_maps/planck_143_full_deep56_filt_unpixwin.fits'
+# planck_car_217_deep56 = planck_scratch+'car_maps/planck_217_full_deep56_filt_unpixwin.fits'
+
+planck_psmask_hp_T_100    = planck_scratch+'planck_masks/dx11d_100_mask_sources_snr_5_radius_3sigma_extobj_CO_apog30.fits'
+planck_psmask_hp_pol_100  = planck_scratch+'planck_masks/dx11d_143_mask_sources_snr_5_radius_3sigma_extobj_apog30.fits'
+planck_galmask_hp_T_100   = planck_scratch+'planck_masks/mask_gal_fsky0p80_apo2_V3.fits'
+planck_galmask_hp_pol_100 = planck_scratch+'planck_masks/pol_mask_RD12_2.fits'
+
+planck_psmask_hp_T_143    = planck_scratch+'planck_masks/dx11d_143_mask_sources_snr_5_radius_3sigma_extobj_apog30.fits'
+planck_psmask_hp_pol_143  = planck_scratch+'planck_masks/dx11d_143_mask_sources_snr_5_radius_3sigma_extobj_apog30.fits'
+planck_galmask_hp_T_143   = planck_scratch+'planck_masks/mask_gal_fsky0p70_apo2_V3.fits'
+planck_galmask_hp_pol_143 = planck_scratch+'planck_masks/pol_mask_RD12_2.fits'
+
+planck_psmask_hp_T_217    = planck_scratch+'planck_masks/dx11d_217_mask_sources_snr_5_radius_3sigma_extobj_CO_apog30.fits'
+planck_psmask_hp_pol_217  = planck_scratch+'planck_masks/dx11d_143_mask_sources_snr_5_radius_3sigma_extobj_apog30.fits'
+planck_galmask_hp_T_217   = planck_scratch+'planck_masks/mask_gal_fsky0p60_apo2_V3.fits'
+planck_galmask_hp_pol_217 = planck_scratch+'planck_masks/pol_mask_RD12_2.fits'
+
+#planck_mask_hp_100 = planck_scratch + 'planck_masks/'planck_masks/100_full_12.1_80.fits'
+#planck_mask_hp_143 = planck_scratch + 'planck_masks/143_full_12.1_70.fits'
+#planck_mask_hp_217 = planck_scratch + 'planck_masks/217_full_12.1_60.fits'
+#planck_mask_car_100_deep56 = planck_scratch+'car_masks/100_full_12.1_80_deep56.fits'
+#planck_mask_car_143_deep56 = planck_scratch+'car_masks/143_full_12.1_70_deep56.fits'
+#planck_mask_car_217_deep56 = planck_scratch+'car_masks/217_full_12.1_60_deep56.fits'
+
+# planck_mask_hp_100_T = planck_scratch + 'planck_masks/COM_Mask_Likelihood-temperature-100-hm2_2048_R3.00.fits'
+# planck_mask_hp_143_T = planck_scratch + 'planck_masks/COM_Mask_Likelihood-temperature-143-hm2_2048_R3.00.fits'
+# planck_mask_hp_217_T = planck_scratch + 'planck_masks/COM_Mask_Likelihood-temperature-217-hm2_2048_R3.00.fits'
+# planck_mask_hp_100_P = planck_scratch + 'planck_masks/COM_Mask_Likelihood-polarization-100-hm2_2048_R3.00.fits'
+# planck_mask_hp_143_P = planck_scratch + 'planck_masks/COM_Mask_Likelihood-polarization-143-hm2_2048_R3.00.fits'
+# planck_mask_hp_217_P = planck_scratch + 'planck_masks/COM_Mask_Likelihood-polarization-217-hm2_2048_R3.00.fits'
+
+# planck_mask_car_100_deep56_T = planck_scratch+'car_masks/COM_100_hm1_deep56_T.fits'
+# planck_mask_car_143_deep56_T = planck_scratch+'car_masks/COM_143_hm1_deep56_T.fits'
+# planck_mask_car_217_deep56_T = planck_scratch+'car_masks/COM_217_hm1_deep56_T.fits'
+# planck_mask_car_100_deep56_P = planck_scratch+'car_masks/COM_100_hm1_deep56_P.fits'
+# planck_mask_car_143_deep56_P = planck_scratch+'car_masks/COM_143_hm1_deep56_P.fits'
+# planck_mask_car_217_deep56_P = planck_scratch+'car_masks/COM_217_hm1_deep56_P.fits'
+planck_mask_car_100_deep56_T = planck_scratch+'car_masks/100_hm2_12.1_80_deep56_T.fits'
+planck_mask_car_143_deep56_T = planck_scratch+'car_masks/143_hm2_12.1_70_deep56_T.fits'
+planck_mask_car_217_deep56_T = planck_scratch+'car_masks/217_hm2_12.1_60_deep56_T.fits'
+planck_mask_car_100_deep56_P = planck_scratch+'car_masks/100_hm2_12.1_80_deep56_P.fits'
+planck_mask_car_143_deep56_P = planck_scratch+'car_masks/143_hm2_12.1_70_deep56_P.fits'
+planck_mask_car_217_deep56_P = planck_scratch+'car_masks/217_hm2_12.1_60_deep56_P.fits'
+
+
+data_dir = '/global/cscratch1/sd/rosenber/ACT_data/'
+map_dir = data_dir + 'maps_d56/'
+
+srcfree_maps_s14_deep56_pa1_f150 = [map_dir + 'act_dr4.01_s14_D56_pa1_f150_nohwp_night_3pass_4way_coadd_map_srcfree.fits']
+srcfree_maps_s14_deep56_pa2_f150 = [map_dir + 'act_dr4.01_s14_D56_pa2_f150_nohwp_night_3pass_4way_coadd_map_srcfree.fits']
+srcfree_maps_s15_deep56_pa1_f150 = [map_dir + 'act_dr4.01_s15_D56_pa1_f150_nohwp_night_3pass_4way_coadd_map_srcfree.fits']
+srcfree_maps_s15_deep56_pa2_f150 = [map_dir + 'act_dr4.01_s15_D56_pa2_f150_nohwp_night_3pass_4way_coadd_map_srcfree.fits']
+srcfree_maps_s15_deep56_pa3_f090 = [map_dir + 'act_dr4.01_s15_D56_pa3_f090_nohwp_night_3pass_4way_coadd_map_srcfree.fits']
+srcfree_maps_s15_deep56_pa3_f150 = [map_dir + 'act_dr4.01_s15_D56_pa3_f150_nohwp_night_3pass_4way_coadd_map_srcfree.fits']
+
+src_maps_s14_deep56_pa1_f150 = [map_dir + 'act_dr4.01_s14_D56_pa1_f150_nohwp_night_3pass_4way_coadd_srcs.fits']
+src_maps_s14_deep56_pa2_f150 = [map_dir + 'act_dr4.01_s14_D56_pa2_f150_nohwp_night_3pass_4way_coadd_srcs.fits']
+src_maps_s15_deep56_pa1_f150 = [map_dir + 'act_dr4.01_s15_D56_pa1_f150_nohwp_night_3pass_4way_coadd_srcs.fits']
+src_maps_s15_deep56_pa2_f150 = [map_dir + 'act_dr4.01_s15_D56_pa2_f150_nohwp_night_3pass_4way_coadd_srcs.fits']
+src_maps_s15_deep56_pa3_f090 = [map_dir + 'act_dr4.01_s15_D56_pa3_f090_nohwp_night_3pass_4way_coadd_srcs.fits']
+src_maps_s15_deep56_pa3_f150 = [map_dir + 'act_dr4.01_s15_D56_pa3_f150_nohwp_night_3pass_4way_coadd_srcs.fits']
+
+maps_s14_deep56_pa1_f150 = [map_dir + 'filtered/act_dr4.01_s14_D56_pa1_f150_nohwp_night_3pass_4way_coadd_map_srcadd_filt_unpixwin.fits']
+maps_s14_deep56_pa2_f150 = [map_dir + 'filtered/act_dr4.01_s14_D56_pa2_f150_nohwp_night_3pass_4way_coadd_map_srcadd_filt_unpixwin.fits']
+maps_s15_deep56_pa1_f150 = [map_dir + 'filtered/act_dr4.01_s15_D56_pa1_f150_nohwp_night_3pass_4way_coadd_map_srcadd_filt_unpixwin.fits']
+maps_s15_deep56_pa2_f150 = [map_dir + 'filtered/act_dr4.01_s15_D56_pa2_f150_nohwp_night_3pass_4way_coadd_map_srcadd_filt_unpixwin.fits']
+maps_s15_deep56_pa3_f090 = [map_dir + 'filtered/act_dr4.01_s15_D56_pa3_f090_nohwp_night_3pass_4way_coadd_map_srcadd_filt_unpixwin.fits']
+maps_s15_deep56_pa3_f150 = [map_dir + 'filtered/act_dr4.01_s15_D56_pa3_f150_nohwp_night_3pass_4way_coadd_map_srcadd_filt_unpixwin.fits']
+
+cal_s14_deep56_pa1_f150 = 0.9988993943335835
+cal_s14_deep56_pa2_f150 = 0.9892421341612982
+cal_s15_deep56_pa1_f150 = 0.9936800289831733
+cal_s15_deep56_pa2_f150 = 0.9789790600416334
+cal_s15_deep56_pa3_f090 = 1.0295630140987
+cal_s15_deep56_pa3_f150 = 1.0456576877735848
+
+nu_eff_s14_deep56_pa1_f150 = 150
+nu_eff_s14_deep56_pa2_f150 = 150
+nu_eff_s15_deep56_pa1_f150 = 150
+nu_eff_s15_deep56_pa2_f150 = 150
+nu_eff_s15_deep56_pa3_f090 = 90
+nu_eff_s15_deep56_pa3_f150 = 150
+
+planck_beam_100 = planck_data_dir+'beams/Wl_R3.01_fullsky_100x100.fits'
+planck_beam_143 = planck_data_dir+'beams/Wl_R3.01_fullsky_143x143.fits'
+planck_beam_217 = planck_data_dir+'beams/Wl_R3.01_fullsky_217x217.fits'
+act_beam_s14_deep56_pa1_f150 = data_dir + 'window_functions/beams/act_dr4.01_s14_pa1_f150_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+act_beam_s14_deep56_pa2_f150 = data_dir + 'window_functions/beams/act_dr4.01_s14_pa2_f150_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+act_beam_s15_deep56_pa1_f150 = data_dir + 'window_functions/beams/act_dr4.01_s15_pa1_f150_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+act_beam_s15_deep56_pa2_f150 = data_dir + 'window_functions/beams/act_dr4.01_s15_pa2_f150_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+act_beam_s15_deep56_pa3_f090 = data_dir + 'window_functions/beams/act_dr4.01_s15_pa3_f090_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+act_beam_s15_deep56_pa3_f150 = data_dir + 'window_functions/beams/act_dr4.01_s15_pa3_f150_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+
+ivar_maps_s14_deep56_pa1_f150 = map_dir + 'act_dr4.01_s14_D56_pa1_f150_nohwp_night_3pass_4way_coadd_ivar.fits'
+ivar_maps_s14_deep56_pa2_f150 = map_dir + 'act_dr4.01_s14_D56_pa2_f150_nohwp_night_3pass_4way_coadd_ivar.fits'
+ivar_maps_s15_deep56_pa1_f150 = map_dir + 'act_dr4.01_s15_D56_pa1_f150_nohwp_night_3pass_4way_coadd_ivar.fits'
+ivar_maps_s15_deep56_pa2_f150 = map_dir + 'act_dr4.01_s15_D56_pa2_f150_nohwp_night_3pass_4way_coadd_ivar.fits'
+ivar_maps_s15_deep56_pa3_f090 = map_dir + 'act_dr4.01_s15_D56_pa3_f090_nohwp_night_3pass_4way_coadd_ivar.fits'
+ivar_maps_s15_deep56_pa3_f150 = map_dir + 'act_dr4.01_s15_D56_pa3_f150_nohwp_night_3pass_4way_coadd_ivar.fits'
+
+footprint_deep56     = data_dir + "masks/footprints/act_dr4.01_D56_apo_w0.fits"
+footprint_s14_deep56 = data_dir + "masks/footprints/act_dr4.01_D56_apo_w0.fits"
+footprint_s15_deep56 = data_dir + "masks/footprints/act_dr4.01_D56_apo_w0.fits"
+
+psmask_s14_deep56_150 = data_dir + "masks/source_masks/act_dr4.01_mask_s13s16_0.015mJy_5.0arcmin.fits"
+psmask_s15_deep56_150 = data_dir + "masks/source_masks/act_dr4.01_mask_s13s16_0.015mJy_5.0arcmin.fits"
+psmask_s14_deep56_090 = data_dir + "masks/source_masks/act_dr4.01_mask_s13s16_0.015mJy_8.0arcmin.fits"
+psmask_s15_deep56_090 = data_dir + "masks/source_masks/act_dr4.01_mask_s13s16_0.015mJy_8.0arcmin.fits"
+
+apod_150 = 10 / 60.
+apod_090 = 15 / 60.
+
+act_window_T_s14_deep56_pa1_f150 = data_dir + 'window/deep56_s14_pa1_f150_T.fits'
+act_window_T_s14_deep56_pa2_f150 = data_dir + 'window/deep56_s14_pa2_f150_T.fits'
+act_window_T_s15_deep56_pa1_f150 = data_dir + 'window/deep56_s15_pa1_f150_T.fits'
+act_window_T_s15_deep56_pa2_f150 = data_dir + 'window/deep56_s15_pa2_f150_T.fits'
+act_window_T_s15_deep56_pa3_f090 = data_dir + 'window/deep56_s15_pa3_f090_T.fits'
+act_window_T_s15_deep56_pa3_f150 = data_dir + 'window/deep56_s15_pa3_f150_T.fits'
+
+act_window_pol_s14_deep56_pa1_f150 = data_dir + 'window/deep56_s14_pa1_f150_T.fits'
+act_window_pol_s14_deep56_pa2_f150 = data_dir + 'window/deep56_s14_pa2_f150_T.fits'
+act_window_pol_s15_deep56_pa1_f150 = data_dir + 'window/deep56_s15_pa1_f150_T.fits'
+act_window_pol_s15_deep56_pa2_f150 = data_dir + 'window/deep56_s15_pa2_f150_T.fits'
+act_window_pol_s15_deep56_pa3_f090 = data_dir + 'window/deep56_s15_pa3_f090_T.fits'
+act_window_pol_s15_deep56_pa3_f150 = data_dir + 'window/deep56_s15_pa3_f150_T.fits'
+
+# tf_planck_deep56 = data_dir + "deep56_kfilter_tfunc_sim.txt"
+tf_s14_deep56 = data_dir + "deep56_kfilter_x90y50_analytical_s14_deep56.txt"
+tf_s15_deep56 = data_dir + "deep56_kfilter_x90y50_analytical_s15_deep56.txt"
+
+# theoryfile = data_dir + "ACT_bestfit_theory_CAMB.txt"
+# fgfile = data_dir + "foregrounds_d56.txt"
+#binning_file = data_dir + "BIN_ACTPOL_50_4_SC_low_ell"
+binning_file = planck_data_dir + "planck_bands_new61_pspy.txt"
+niter = 0
+remove_mean = True
+lmax = 3000
+type = 'Dl'
+write_splits_spectra = True
+multistep_path = data_dir
+steve_dir = "/global/homes/r/rosenber/act/official_products/spectra/cmbonly_spectra_dr4.01"
+use_toeplitz  = False
+
+
+#plot
+range_TT = [1, 8000]
+range_TE = [-150, 150]
+range_ET = [-150, 150]
+range_EE = [-20, 50]
+
+#sim
+iStart = 0
+iStop = 99
