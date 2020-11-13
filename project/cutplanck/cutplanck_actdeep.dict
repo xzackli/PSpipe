@@ -1,0 +1,86 @@
+freqs = ["100", "143", "217"]
+splits = ["hm1","hm2"]
+planck_kfilt = False
+remove_planck_pixwin_preprocess = True
+planck_kfilt_pw = True
+
+regions = ["deep56"]
+
+act_data_dir = '/global/cscratch1/sd/rosenber/ACT_data/'
+planck_data_dir = '/global/homes/r/rosenber/planck/'
+planck_scratch = '/global/cscratch1/sd/rosenber/planck_data/'
+
+planck_beam_template = planck_data_dir+"beams/Wl_R3.01_fullsky_%s%sx%s%s.fits"
+
+planck_hp_100_hm1 = planck_data_dir + "maps/HFI_SkyMap_100_2048_R3.01_halfmission-1.fits"
+planck_hp_143_hm1 = planck_data_dir + "maps/HFI_SkyMap_143_2048_R3.01_halfmission-1.fits"
+planck_hp_217_hm1 = planck_data_dir + "maps/HFI_SkyMap_217_2048_R3.01_halfmission-1.fits"
+planck_hp_100_hm2 = planck_data_dir + "maps/HFI_SkyMap_100_2048_R3.01_halfmission-2.fits"
+planck_hp_143_hm2 = planck_data_dir + "maps/HFI_SkyMap_143_2048_R3.01_halfmission-2.fits"
+planck_hp_217_hm2 = planck_data_dir + "maps/HFI_SkyMap_217_2048_R3.01_halfmission-2.fits"
+
+planck_car_100_hm1_deep56 = planck_scratch+'car_maps/planck_100_hm1_deep56_unpixwin.fits'
+planck_car_143_hm1_deep56 = planck_scratch+'car_maps/planck_143_hm1_deep56_unpixwin.fits'
+planck_car_217_hm1_deep56 = planck_scratch+'car_maps/planck_217_hm1_deep56_unpixwin.fits'
+planck_car_100_hm2_deep56 = planck_scratch+'car_maps/planck_100_hm2_deep56_unpixwin.fits'
+planck_car_143_hm2_deep56 = planck_scratch+'car_maps/planck_143_hm2_deep56_unpixwin.fits'
+planck_car_217_hm2_deep56 = planck_scratch+'car_maps/planck_217_hm2_deep56_unpixwin.fits'
+
+planck_psmask_hp_T_100    = planck_scratch+'planck_masks/dx11d_100_mask_sources_snr_5_radius_3sigma_extobj_CO_apog30.fits'
+planck_psmask_hp_pol_100  = planck_scratch+'planck_masks/dx11d_143_mask_sources_snr_5_radius_3sigma_extobj_apog30.fits'
+planck_galmask_hp_T_100   = planck_scratch+'planck_masks/mask_gal_fsky0p80_apo2_V3.fits'
+planck_galmask_hp_pol_100 = planck_scratch+'planck_masks/pol_mask_RD12_2.fits'
+
+planck_psmask_hp_T_143    = planck_scratch+'planck_masks/dx11d_143_mask_sources_snr_5_radius_3sigma_extobj_apog30.fits'
+planck_psmask_hp_pol_143  = planck_scratch+'planck_masks/dx11d_143_mask_sources_snr_5_radius_3sigma_extobj_apog30.fits'
+planck_galmask_hp_T_143   = planck_scratch+'planck_masks/mask_gal_fsky0p70_apo2_V3.fits'
+planck_galmask_hp_pol_143 = planck_scratch+'planck_masks/pol_mask_RD12_2.fits'
+
+planck_psmask_hp_T_217    = planck_scratch+'planck_masks/dx11d_217_mask_sources_snr_5_radius_3sigma_extobj_CO_apog30.fits'
+planck_psmask_hp_pol_217  = planck_scratch+'planck_masks/dx11d_143_mask_sources_snr_5_radius_3sigma_extobj_apog30.fits'
+planck_galmask_hp_T_217   = planck_scratch+'planck_masks/mask_gal_fsky0p60_apo2_V3.fits'
+planck_galmask_hp_pol_217 = planck_scratch+'planck_masks/pol_mask_RD12_2.fits'
+
+planck_mask_hp_100_hm1 = planck_scratch + 'planck_masks/100_hm1_pol12.1_80.fits'
+planck_mask_hp_143_hm1 = planck_scratch + 'planck_masks/143_hm1_pol12.1_70.fits'
+planck_mask_hp_217_hm1 = planck_scratch + 'planck_masks/217_hm1_pol12.1_60.fits'
+planck_mask_hp_100_hm2 = planck_scratch + 'planck_masks/100_hm2_pol12.1_80.fits'
+planck_mask_hp_143_hm2 = planck_scratch + 'planck_masks/143_hm2_pol12.1_70.fits'
+planck_mask_hp_217_hm2 = planck_scratch + 'planck_masks/217_hm2_pol12.1_60.fits'
+
+planck_mask_car_100_hm1_deep56_T = planck_scratch+'car_masks/100_hm1_12.1_80_deep56_T.fits'
+planck_mask_car_143_hm1_deep56_T = planck_scratch+'car_masks/143_hm1_12.1_70_deep56_T.fits'
+planck_mask_car_217_hm1_deep56_T = planck_scratch+'car_masks/217_hm1_12.1_60_deep56_T.fits'
+planck_mask_car_100_hm2_deep56_T = planck_scratch+'car_masks/100_hm2_12.1_80_deep56_T.fits'
+planck_mask_car_143_hm2_deep56_T = planck_scratch+'car_masks/143_hm2_12.1_70_deep56_T.fits'
+planck_mask_car_217_hm2_deep56_T = planck_scratch+'car_masks/217_hm2_12.1_60_deep56_T.fits'
+planck_mask_car_100_hm1_deep56_P = planck_scratch+'car_masks/100_hm1_12.1_80_deep56_P.fits'
+planck_mask_car_143_hm1_deep56_P = planck_scratch+'car_masks/143_hm1_12.1_70_deep56_P.fits'
+planck_mask_car_217_hm1_deep56_P = planck_scratch+'car_masks/217_hm1_12.1_60_deep56_P.fits'
+planck_mask_car_100_hm2_deep56_P = planck_scratch+'car_masks/100_hm2_12.1_80_deep56_P.fits'
+planck_mask_car_143_hm2_deep56_P = planck_scratch+'car_masks/143_hm2_12.1_70_deep56_P.fits'
+planck_mask_car_217_hm2_deep56_P = planck_scratch+'car_masks/217_hm2_12.1_60_deep56_P.fits'
+
+footprint_deep56 = act_data_dir + "masks/footprints/act_dr4.01_D56_apo_w0.fits"
+
+tf_planck_deep56 = None
+
+#binning_file = data_dir + "BIN_ACTPOL_50_4_SC_low_ell"
+binning_file = planck_data_dir + "planck_bands_new61_pspy.txt"
+niter = 0
+remove_mean = True
+lmax = 3000
+type = 'Dl'
+write_splits_spectra = True
+use_toeplitz  = False
+
+
+#plot
+range_TT = [1, 8000]
+range_TE = [-150, 150]
+range_ET = [-150, 150]
+range_EE = [-20, 50]
+
+#sim
+iStart = 0
+iStop = 99
