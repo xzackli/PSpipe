@@ -1,0 +1,115 @@
+surveys = ["s14_deep56", "s15_deep56"]
+arrays_s14_deep56 = ["pa1_f150", "pa2_f150"]
+arrays_s15_deep56 = ["pa1_f150", "pa2_f150", "pa3_f090", "pa3_f150"]
+
+data_dir = '/global/cscratch1/sd/rosenber/ACT_data/'
+planck_data_dir = '/global/homes/r/rosenber/planck/'
+map_dir = data_dir + 'maps_d56/'
+
+act_kfilt = True
+remove_act_pixwin_preprocess = True
+vk_mask = [-90, 90]
+hk_mask = [-50, 50]
+# Set to True to do ACT k-space filtering in get_spectra.py instead of in preprocessing
+use_kspace_filter = False
+
+srcfree_maps_s14_deep56_pa1_f150 = [map_dir + 'act_dr4.01_s14_D56_pa1_f150_nohwp_night_3pass_4way_set%d_map_srcfree.fits'  % i for i in range(4)]
+srcfree_maps_s14_deep56_pa2_f150 = [map_dir + 'act_dr4.01_s14_D56_pa2_f150_nohwp_night_3pass_4way_set%d_map_srcfree.fits'  % i for i in range(4)]
+srcfree_maps_s15_deep56_pa1_f150 = [map_dir + 'act_dr4.01_s15_D56_pa1_f150_nohwp_night_3pass_4way_set%d_map_srcfree.fits'  % i for i in range(4)]
+srcfree_maps_s15_deep56_pa2_f150 = [map_dir + 'act_dr4.01_s15_D56_pa2_f150_nohwp_night_3pass_4way_set%d_map_srcfree.fits'  % i for i in range(4)]
+srcfree_maps_s15_deep56_pa3_f090 = [map_dir + 'act_dr4.01_s15_D56_pa3_f090_nohwp_night_3pass_4way_set%d_map_srcfree.fits'  % i for i in range(4)]
+srcfree_maps_s15_deep56_pa3_f150 = [map_dir + 'act_dr4.01_s15_D56_pa3_f150_nohwp_night_3pass_4way_set%d_map_srcfree.fits'  % i for i in range(4)]
+
+src_maps_s14_deep56_pa1_f150 = [map_dir + 'act_dr4.01_s14_D56_pa1_f150_nohwp_night_3pass_4way_set%d_srcs.fits'  % i for i in range(4)]
+src_maps_s14_deep56_pa2_f150 = [map_dir + 'act_dr4.01_s14_D56_pa2_f150_nohwp_night_3pass_4way_set%d_srcs.fits'  % i for i in range(4)]
+src_maps_s15_deep56_pa1_f150 = [map_dir + 'act_dr4.01_s15_D56_pa1_f150_nohwp_night_3pass_4way_set%d_srcs.fits'  % i for i in range(4)]
+src_maps_s15_deep56_pa2_f150 = [map_dir + 'act_dr4.01_s15_D56_pa2_f150_nohwp_night_3pass_4way_set%d_srcs.fits'  % i for i in range(4)]
+src_maps_s15_deep56_pa3_f090 = [map_dir + 'act_dr4.01_s15_D56_pa3_f090_nohwp_night_3pass_4way_set%d_srcs.fits'  % i for i in range(4)]
+src_maps_s15_deep56_pa3_f150 = [map_dir + 'act_dr4.01_s15_D56_pa3_f150_nohwp_night_3pass_4way_set%d_srcs.fits'  % i for i in range(4)]
+
+maps_s14_deep56_pa1_f150 = [map_dir + 'filtered/act_dr4.01_s14_D56_pa1_f150_nohwp_night_3pass_4way_set%d_map_srcadd_filt_unpixwin.fits'  % i for i in range(4)]
+maps_s14_deep56_pa2_f150 = [map_dir + 'filtered/act_dr4.01_s14_D56_pa2_f150_nohwp_night_3pass_4way_set%d_map_srcadd_filt_unpixwin.fits'  % i for i in range(4)]
+maps_s15_deep56_pa1_f150 = [map_dir + 'filtered/act_dr4.01_s15_D56_pa1_f150_nohwp_night_3pass_4way_set%d_map_srcadd_filt_unpixwin.fits'  % i for i in range(4)]
+maps_s15_deep56_pa2_f150 = [map_dir + 'filtered/act_dr4.01_s15_D56_pa2_f150_nohwp_night_3pass_4way_set%d_map_srcadd_filt_unpixwin.fits'  % i for i in range(4)]
+maps_s15_deep56_pa3_f090 = [map_dir + 'filtered/act_dr4.01_s15_D56_pa3_f090_nohwp_night_3pass_4way_set%d_map_srcadd_filt_unpixwin.fits'  % i for i in range(4)]
+maps_s15_deep56_pa3_f150 = [map_dir + 'filtered/act_dr4.01_s15_D56_pa3_f150_nohwp_night_3pass_4way_set%d_map_srcadd_filt_unpixwin.fits'  % i for i in range(4)]
+
+cal_s14_deep56_pa1_f150 = 0.9988993943335835
+cal_s14_deep56_pa2_f150 = 0.9892421341612982
+cal_s15_deep56_pa1_f150 = 0.9936800289831733
+cal_s15_deep56_pa2_f150 = 0.9789790600416334
+cal_s15_deep56_pa3_f090 = 1.0295630140987
+cal_s15_deep56_pa3_f150 = 1.0456576877735848
+
+nu_eff_s14_deep56_pa1_f150 = 150
+nu_eff_s14_deep56_pa2_f150 = 150
+nu_eff_s15_deep56_pa1_f150 = 150
+nu_eff_s15_deep56_pa2_f150 = 150
+nu_eff_s15_deep56_pa3_f090 = 90
+nu_eff_s15_deep56_pa3_f150 = 150
+
+beam_s14_deep56_pa1_f150 = data_dir + 'window_functions/beams/act_dr4.01_s14_pa1_f150_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+beam_s14_deep56_pa2_f150 = data_dir + 'window_functions/beams/act_dr4.01_s14_pa2_f150_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+beam_s15_deep56_pa1_f150 = data_dir + 'window_functions/beams/act_dr4.01_s15_pa1_f150_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+beam_s15_deep56_pa2_f150 = data_dir + 'window_functions/beams/act_dr4.01_s15_pa2_f150_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+beam_s15_deep56_pa3_f090 = data_dir + 'window_functions/beams/act_dr4.01_s15_pa3_f090_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+beam_s15_deep56_pa3_f150 = data_dir + 'window_functions/beams/act_dr4.01_s15_pa3_f150_nohwp_night_beam_tform_jitter_D56_cmbspec.txt'
+
+ivar_maps_s14_deep56_pa1_f150 = map_dir + 'act_dr4.01_s14_D56_pa1_f150_nohwp_night_3pass_4way_coadd_ivar.fits'
+ivar_maps_s14_deep56_pa2_f150 = map_dir + 'act_dr4.01_s14_D56_pa2_f150_nohwp_night_3pass_4way_coadd_ivar.fits'
+ivar_maps_s15_deep56_pa1_f150 = map_dir + 'act_dr4.01_s15_D56_pa1_f150_nohwp_night_3pass_4way_coadd_ivar.fits'
+ivar_maps_s15_deep56_pa2_f150 = map_dir + 'act_dr4.01_s15_D56_pa2_f150_nohwp_night_3pass_4way_coadd_ivar.fits'
+ivar_maps_s15_deep56_pa3_f090 = map_dir + 'act_dr4.01_s15_D56_pa3_f090_nohwp_night_3pass_4way_coadd_ivar.fits'
+ivar_maps_s15_deep56_pa3_f150 = map_dir + 'act_dr4.01_s15_D56_pa3_f150_nohwp_night_3pass_4way_coadd_ivar.fits'
+
+footprint_s14_deep56 = data_dir + "masks/footprints/act_dr4.01_D56_apo_w0.fits"
+footprint_s15_deep56 = data_dir + "masks/footprints/act_dr4.01_D56_apo_w0.fits"
+
+psmask_s14_deep56_150 = data_dir + "masks/source_masks/act_dr4.01_mask_s13s16_0.015mJy_5.0arcmin.fits"
+psmask_s15_deep56_150 = data_dir + "masks/source_masks/act_dr4.01_mask_s13s16_0.015mJy_5.0arcmin.fits"
+psmask_s14_deep56_090 = data_dir + "masks/source_masks/act_dr4.01_mask_s13s16_0.015mJy_8.0arcmin.fits"
+psmask_s15_deep56_090 = data_dir + "masks/source_masks/act_dr4.01_mask_s13s16_0.015mJy_8.0arcmin.fits"
+
+apod_150 = 10 / 60.
+apod_090 = 15 / 60.
+
+window_T_s14_deep56_pa1_f150 = data_dir + 'window/deep56_s14_pa1_f150_T.fits'
+window_T_s14_deep56_pa2_f150 = data_dir + 'window/deep56_s14_pa2_f150_T.fits'
+window_T_s15_deep56_pa1_f150 = data_dir + 'window/deep56_s15_pa1_f150_T.fits'
+window_T_s15_deep56_pa2_f150 = data_dir + 'window/deep56_s15_pa2_f150_T.fits'
+window_T_s15_deep56_pa3_f090 = data_dir + 'window/deep56_s15_pa3_f090_T.fits'
+window_T_s15_deep56_pa3_f150 = data_dir + 'window/deep56_s15_pa3_f150_T.fits'
+
+window_pol_s14_deep56_pa1_f150 = data_dir + 'window/deep56_s14_pa1_f150_T.fits'
+window_pol_s14_deep56_pa2_f150 = data_dir + 'window/deep56_s14_pa2_f150_T.fits'
+window_pol_s15_deep56_pa1_f150 = data_dir + 'window/deep56_s15_pa1_f150_T.fits'
+window_pol_s15_deep56_pa2_f150 = data_dir + 'window/deep56_s15_pa2_f150_T.fits'
+window_pol_s15_deep56_pa3_f090 = data_dir + 'window/deep56_s15_pa3_f090_T.fits'
+window_pol_s15_deep56_pa3_f150 = data_dir + 'window/deep56_s15_pa3_f150_T.fits'
+
+tf_s14_deep56 = data_dir + "deep56_kfilter_x90y50_analytical_s14_deep56.txt"
+tf_s15_deep56 = data_dir + "deep56_kfilter_x90y50_analytical_s15_deep56.txt"
+
+theoryfile = data_dir + "ACT_bestfit_theory_CAMB.txt"
+fgfile = data_dir + "foregrounds_d56.txt"
+#binning_file = data_dir + "BIN_ACTPOL_50_4_SC_low_ell"
+binning_file = planck_data_dir + "planck_bands_new61_pspy.txt"
+niter = 0
+remove_mean = True
+lmax = 3000
+type = 'Dl'
+write_splits_spectra = True
+multistep_path = data_dir
+steve_dir = "/global/cscratch1/sd/rosenber/steve_data/deep56_product/spectra/deep56_spec_200603"
+use_toeplitz  = False
+
+
+#plot
+range_TT = [1, 8000]
+range_TE = [-150, 150]
+range_ET = [-150, 150]
+range_EE = [-20, 50]
+
+#sim
+iStart = 0
+iStop = 99
