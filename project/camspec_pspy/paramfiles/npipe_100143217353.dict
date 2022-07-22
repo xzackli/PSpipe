@@ -1,0 +1,51 @@
+cmb_freqs = ["100", "143", "217"]
+clean_freqs = ["353"]
+splits = ["A", "B"]
+halfringsplits = [""]#['hr1', 'hr2']
+misspix_flag = 'none'
+largevals_flag = 'error'
+
+binning_file = "/global/homes/r/rosenber/planck/planck_bands_new61_pspy_long.txt"
+type = "Dl"
+speckinds = "TEB"
+pixwin = True # True to remove pixwin
+remove_mono_dipo_T = False
+remove_mono_dipo_pol = False
+remove_mono_george = True
+niter = 2
+lmax = 3999
+use_pol = True # False to do T only eg for 545
+
+home_dir = '/global/homes/r/rosenber/'
+data_dir = home_dir + 'npipe/'
+planck_scratch = '/global/cscratch1/sd/rosenber/planck_data/'
+mask_dir = planck_scratch + 'planck_masks/telos/'
+beam_dir = home_dir + 'npipe_beams_tf/'
+
+# planck_dipole = None
+planck_dipole = data_dir + "aux/dipole_nside2048.fits"
+do_decouple = True
+
+planck_beam_template = beam_dir+"Bl_TEB_npipe6v20_%s%sx%s%s.fits"
+#planck_beam_template = None
+
+#maptemplate = "planck_data_all/planck2020/npipe/npipe6v20%s/npipe6v20%s_%s_map.fits"
+maptemplate = planck_scratch + 'planck_maps/telos/NPIPE_%s%s.fits'
+
+# map_100 = [home_dir + maptemplate % (split, split, "100") for split in splits]
+# map_143 = [home_dir + maptemplate % (split, split, "143") for split in splits]
+# map_217 = [home_dir + maptemplate % (split, split, "217") for split in splits]
+map_100 = [maptemplate % ("100", split) for split in splits]
+map_143 = [maptemplate % ("143", split) for split in splits]
+map_217 = [maptemplate % ("217", split) for split in splits]
+map_353 = [maptemplate % ("353", split) for split in splits]
+
+window_100_A = mask_dir + "100_A_12.5_80.fits"
+window_100_B = mask_dir + "100_B_12.5_80.fits"
+window_143_A = mask_dir + "143_A_12.5_80.fits"
+window_143_B = mask_dir + "143_B_12.5_80.fits"
+window_217_A = mask_dir + "217_A_12.5_80.fits"
+window_217_B = mask_dir + "217_B_12.5_80.fits"
+
+
+
