@@ -5,7 +5,6 @@ To run it:
 python get_planck_mcm_Bbl.py global.dict
 '''
 import numpy as np
-import healpy as hp
 from pspy import so_dict, so_map, so_mcm, pspy_utils, so_mpi
 import sys
 
@@ -25,6 +24,7 @@ type = d["type"]
 binning_file = d["binning_file"]
 pixwin = d["pixwin"]
 splits = d["splits"]
+use_pol = d["use_pol"]
 experiment = "Planck"
 
 print("Compute Planck 2018 mode coupling matrices")
@@ -52,52 +52,37 @@ for task in subtasks:
     task = int(task)
     freq1, hm1, freq2, hm2 = freq1_list[task], hm1_list[task], freq2_list[task], hm2_list[task]
     
+    window_1 = d["window_%s_%s" % (freq1, hm1)]
+    win_t1 = so_map.read_map(window_1, fields_healpix=0)
+    window_tuple1 = win_t1
+    if use_pol:
+        win_pol1 = so_map.read_map(window_1, fields_healpix=1)
+        window_tuple1 = (win_t1, win_pol1)
+        del win_pol1
+    del win_t1
+    window_2 = d["window_%s_%s" % (freq2, hm2)]
+    win_t2 = so_map.read_map(window_2, fields_healpix=0)
+    window_tuple2 = win_t2
+    if use_pol:
+        win_pol2 = so_map.read_map(window_2, fields_healpix=1)
+        window_tuple2 = (win_t2, win_pol2)
+        del win_pol2
+    del win_t2
 
-    win_t1 = so_map.read_map("%s/window_T_%s_%s-%s.fits" % (windows_dir, experiment, freq1, hm1))
-    win_pol1 = so_map.read_map("%s/window_P_%s_%s-%s.fits" % (windows_dir, experiment, freq1, hm1))
-
-    window_tuple1 = (win_t1, win_pol1)
-    
-
-    win_t2 = so_map.read_map("%s/window_T_%s_%s-%s.fits" % (windows_dir, experiment, freq2, hm2))
-    win_pol2 = so_map.read_map("%s/window_P_%s_%s-%s.fits" % (windows_dir, experiment, freq2, hm2))
-
-    window_tuple2 = (win_t2, win_pol2)
-
-        
-    del win_t1, win_pol1
-    
-    l, bl1_t = np.loadtxt(d["beam_%s_%s_T" % (freq1, hm1)], unpack=True)
-    l, bl1_pol = np.loadtxt(d["beam_%s_%s_pol" % (freq1, hm1)], unpack=True)
-
-    if pixwin == True:
-        bl1_t *= hp.pixwin(window_tuple1[0].nside)[:len(bl1_t)]
-        bl1_pol *= hp.pixwin(window_tuple1[0].nside)[:len(bl1_pol)]
-        
-    bl_tuple1 = (bl1_t, bl1_pol)
-
-
-    del win_t2, win_pol2
-                
-    l, bl2_t = np.loadtxt(d["beam_%s_%s_T" % (freq2, hm2)], unpack=True)
-    l, bl2_pol = np.loadtxt(d["beam_%s_%s_pol" % (freq2, hm2)], unpack=True)
-
-    if pixwin == True:
-        bl2_t *= hp.pixwin(window_tuple2[0].nside)[:len(bl2_t)]
-        bl2_pol *= hp.pixwin(window_tuple2[0].nside)[:len(bl2_pol)]
-
-    bl_tuple2 = (bl2_t, bl2_pol)
-                
-    mcm_inv, mbb_inv, Bbl = so_mcm.mcm_and_bbl_spin0and2(win1=window_tuple1,
-                                                         win2=window_tuple2,
-                                                         binning_file=binning_file,
-                                                         bl1=bl_tuple1,
-                                                         bl2=bl_tuple2,
-                                                         lmax=lmax,
-                                                         niter=niter,
-                                                         type=type,
-                                                         unbin=True,
-                                                         save_file="%s/%s_%sx%s_%s-%sx%s" % (mcm_dir, experiment, freq1, experiment, freq2, hm1, hm2))
+    if use_pol:
+        mcm_and_bbl = so_mcm.mcm_and_bbl_spin0and2
+    else:
+        mcm_and_bbl = so_mcm.mcm_and_bbl_spin0
+    mcm_inv, mbb_inv, Bbl = mcm_and_bbl(win1=window_tuple1,
+                                        win2=window_tuple2,
+                                        binning_file=binning_file,
+                                        bl1=None,
+                                        bl2=None,
+                                        lmax=lmax,
+                                        niter=niter,
+                                        type=type,
+                                        binned_mcm=False,
+                                        save_file="%s/%s_%sx%s_%s-%sx%s" % (mcm_dir, experiment, freq1, experiment, freq2, hm1, hm2))
 
 
 
